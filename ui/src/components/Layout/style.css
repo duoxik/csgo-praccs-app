@@ -1,0 +1,14 @@
+html, body, #app {
+    margin: 0;
+    height: 100%;
+    font-family: Tahoma, sans-serif;
+}
+
+.layout {
+    height: 100%;
+}
+
+.content {
+    display: flex;
+    height: calc(100% - 140px);
+}
