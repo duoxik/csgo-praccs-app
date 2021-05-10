@@ -1,14 +1,13 @@
 import { connect } from "react-redux";
-import Layout from "../components/Layout/Layout";
-import { bindActionCreators } from "redux";
-import { setHeaderTitle } from "../actions/headerActions";
+import Index from "../components/Layout";
+// import { bindActionCreators } from "redux";
 
-const mapStateToProps = ({ chatReducer, profileReducer }) => ({
-  chats: chatReducer.chats,
-  userName: profileReducer.systemName,
+const mapStateToProps = () => ({
+  // chats: chatReducer.chats,
+  // userName: profileReducer.systemName,
 });
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ setHeaderTitle }, dispatch);
+// const mapDispatchToProps = (dispatch) =>
+//   bindActionCreators({ setHeaderTitle }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+export default connect(mapStateToProps)(Index);

@@ -11,7 +11,7 @@ import ru.duoxik.service.PlayersService;
 import java.util.List;
 
 @RestController
-@RequestMapping("playerstats/")
+@RequestMapping("api/playerstats/")
 public class PlayerStatsController {
 
     @Autowired

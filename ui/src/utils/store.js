@@ -5,10 +5,10 @@ import { createBrowserHistory } from "history";
 import { routerMiddleware } from "connected-react-router";
 import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
-import { persistStore, persistReducer } from "redux-persist";
+import {  persistStore, persistReducer } from "redux-persist";
 
 const persistConfig = {
-  key: "geekmessanger",
+  key: "csgo_praccs",
   storage,
   stateReconciler: autoMergeLevel2,
   whitelist: [
