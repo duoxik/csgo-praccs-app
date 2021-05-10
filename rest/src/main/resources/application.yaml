@@ -1,8 +1,8 @@
 db:
   driver: org.postgresql.Driver
-  url: jdbc:postgresql://ec2-108-128-104-50.eu-west-1.compute.amazonaws.com:5432/d919uecqoflvva
-  username: iefncxthcsdecy
-  password: bb582bac577914cdc23cac6abad834036e921f1624523e17ccae7554b565b139
+  url: jdbc:postgresql://ec2-52-17-1-206.eu-west-1.compute.amazonaws.com:5432/d8kup0kke99bbu
+  username: fjcgyxiiolcpel
+  password: ba4c9a939f9a819feacc6b3f20e3847b631e8da7315b7398e7cbc407861d1c6d
 
 server:
   port: 3000

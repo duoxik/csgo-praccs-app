@@ -12,10 +12,10 @@ import java.util.List;
 public class PlayerStatsDao {
 
     private static final String GET_PLAYER_STATS_BY_NICKNAME =
-            "select p.nickname, ps.kills, ps.deaths, ps.total_matches, ps.won_matches, ps.rank from players p " +
+            "select p.id, p.nickname, ps.kills, ps.deaths, ps.total_matches, ps.won_matches, ps.rank from players p " +
                     "inner join players_stats ps on p.id = ps.player_id where p.nickname = ?";
 
-    private static final String GET_ALL_PLAYER_STATS_SQL = "select p.nickname, ps.kills, ps.deaths, ps.total_matches, " +
+    private static final String GET_ALL_PLAYER_STATS_SQL = "select p.id, p.nickname, ps.kills, ps.deaths, ps.total_matches, " +
             "ps.won_matches, ps.rank from players p inner join players_stats ps on p.id = ps.player_id";
 
     @Autowired
@@ -30,6 +30,7 @@ public class PlayerStatsDao {
     }
 
     private static final RowMapper<PlayerStats> MAPPER = (rs, rowNum) -> PlayerStats.builder()
+            .id(rs.getInt("id"))
             .nickname(rs.getString("nickname"))
             .kills(rs.getInt("kills"))
             .deaths(rs.getInt("deaths"))

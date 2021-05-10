@@ -1,14 +1,32 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {
-  TableHead,
-  TableRow,
-  TableCell,
-  Paper,
-  TableContainer,
-  Table,
-  TableBody,
-} from "@material-ui/core";
+import { DataGrid } from "@material-ui/data-grid";
+import "./style.css";
+
+const columns = [
+  { field: "id", headerName: "id", width: 70, hide: true },
+  { field: "nickname", headerName: "Nickname", width: 220 },
+  { field: "rank", headerName: "Rank", type: "number", width: 140 },
+  { field: "kills", headerName: "Kills", type: "number", width: 140 },
+  {
+    field: "deaths",
+    headerName: "Deaths",
+    type: "number",
+    width: 140,
+  },
+  {
+    field: "totalMatches",
+    headerName: "Total matches",
+    type: "number",
+    width: 180,
+  },
+  {
+    field: "wonMatches",
+    headerName: "Won matches",
+    type: "number",
+    width: 180,
+  },
+];
 
 export default class PlayerStats extends React.Component {
   static propTypes = {
@@ -33,32 +51,18 @@ export default class PlayerStats extends React.Component {
     const { stats } = this.props;
 
     return (
-      <TableContainer component={Paper}>
-        <Table size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Nickname</TableCell>
-              <TableCell align="center">Rank</TableCell>
-              <TableCell align="center">Kills</TableCell>
-              <TableCell align="center">Deaths</TableCell>
-              <TableCell align="center">Total matches</TableCell>
-              <TableCell align="center">Won matches</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {stats.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell align="center">{row.nickname}</TableCell>
-                <TableCell align="center">{row.rank}</TableCell>
-                <TableCell align="center">{row.kills}</TableCell>
-                <TableCell align="center">{row.deaths}</TableCell>
-                <TableCell align="center">{row.totalMatches}</TableCell>
-                <TableCell align="center">{row.wonMatches}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <DataGrid
+        className="table"
+        rows={stats}
+        columns={columns}
+        pageSize={50}
+        sortModel={[
+          {
+            field: "rank",
+            sort: "desc",
+          },
+        ]}
+      />
     );
   }
 }

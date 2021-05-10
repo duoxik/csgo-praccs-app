@@ -8,6 +8,7 @@ import lombok.ToString;
 @Builder
 @ToString
 public class PlayerStats{
+    private final Integer id;
     private final String nickname;
     private final Integer rank;
     private final Integer kills;
