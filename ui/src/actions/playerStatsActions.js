@@ -6,7 +6,7 @@ export const LOAD_ALL_STATS_ERROR = "@@stats/LOAD_STATS_ERROR";
 
 export const loadAllStats = () => {
   return createAction({
-    endpoint: "/api/playerstats/all",
+    endpoint: "/api/player-info/all",
     method: "GET",
     types: [
       LOAD_ALL_STATS_REQUEST,

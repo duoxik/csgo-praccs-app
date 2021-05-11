@@ -4,7 +4,6 @@ import { DataGrid } from "@material-ui/data-grid";
 import "./style.css";
 
 const columns = [
-  { field: "id", headerName: "id", width: 70, hide: true },
   { field: "nickname", headerName: "Nickname", width: 220 },
   { field: "rank", headerName: "Rank", type: "number", width: 140 },
   { field: "kills", headerName: "Kills", type: "number", width: 140 },
@@ -32,6 +31,7 @@ export default class PlayerStats extends React.Component {
   static propTypes = {
     stats: PropTypes.arrayOf(
       PropTypes.shape({
+        fastcupId: PropTypes.number.isRequired,
         nickname: PropTypes.string.isRequired,
         rank: PropTypes.number.isRequired,
         kills: PropTypes.number.isRequired,

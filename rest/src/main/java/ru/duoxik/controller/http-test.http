@@ -1,0 +1,28 @@
+GET http://localhost:3000/api/player-stats/all
+Accept: application/json
+
+###
+POST http://localhost:3000/api/upload-match/
+Content-Type: application/json
+
+{
+  "platform": "FAST_CUP",
+  "matchId": "5297220"
+}
+
+###
+
+POST https://hasura.fastcup.net/v1/graphql
+Content-Type: application/json
+
+{
+  "operationName": "GetMatch",
+  "variables": {
+    "id": 5297220,
+    "gameID": 1
+  },
+  "query": "fragment match_member on match_members {\n  match_id\n  hash\n  ready\n  match_team_id\n  rating_diff\n  connected\n  is_leaver\n  kills\n  deaths\n  assists\n  private {\n    party_id\n    rating\n    user {\n      id\n      nickName: nick_name\n      avatar\n      online\n      isMobile: is_mobile\n      link\n      stats(\n        where: {game_id: {_eq: $gameID}, map_id: {_is_null: true}, game_mode_id: {_is_null: false}}\n      ) {\n        gameModeID: game_mode_id\n        rating\n        __typename\n      }\n      city {\n        id\n        regionID: region_id\n        name_ru\n        name_uk\n        name_en\n        name_de\n        name_pl\n        name_pt\n        name_es\n        name_hbs\n        name_tr\n        __typename\n      }\n      country {\n        id\n        name_ru\n        name_uk\n        name_en\n        name_de\n        name_pl\n        name_pt\n        name_es\n        name_hbs\n        name_tr\n        iso2\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nquery GetMatch($id: Int!, $gameID: smallint!) {\n  match: matches_by_pk(id: $id) {\n    id\n    status\n    game_status\n    has_winner\n    created_at\n    started_at\n    finished_at\n    scheduled_at\n    readiness_passed\n    last_update\n    server_instance_id\n    teamspeak_server_id\n    tv_address_hidden\n    fake_server_region_id\n    is_paused\n    creator_id\n    dev_build\n    anticheat_enabled\n    type\n    best_of\n    cancellation_reason\n    password\n    chat_id\n    server_region_id\n    game_id\n    game_mode_id\n    max_rounds_count\n    map_banpick_config_id\n    referee_check_requested\n    result_confirmed\n    maps(order_by: {number: asc}) {\n      id\n      number\n      game_status\n      started_at\n      finished_at\n      demo_url\n      demo_deleted\n      map_id\n      __typename\n    }\n    teams(order_by: {id: asc}) {\n      id\n      captain_id\n      name\n      score\n      size\n      chat_id\n      is_winner\n      initial_side\n      team {\n        id\n        name\n        logo\n        tag\n        __typename\n      }\n      mapStats {\n        match_team_id\n        match_map_id\n        score\n        is_winner\n        initial_side\n        __typename\n      }\n      __typename\n    }\n    serverInstance {\n      id\n      ip\n      port\n      tv_port\n      __typename\n    }\n    members {\n      ...match_member\n      __typename\n    }\n    tournament {\n      id\n      name\n      __typename\n    }\n    tournamentStage {\n      id\n      name\n      outgoings {\n        id\n        number\n        matchLink {\n          match_id\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    tournamentRound {\n      id\n      name\n      __typename\n    }\n    __typename\n  }\n}\n"
+}
+
+
+

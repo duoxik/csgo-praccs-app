@@ -5,25 +5,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.duoxik.entity.PlayerStats;
-import ru.duoxik.service.PlayersService;
+import ru.duoxik.entity.PlayerInfo;
+import ru.duoxik.service.playerstats.PlayersInfoService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/playerstats/")
-public class PlayerStatsController {
+@RequestMapping("api/player-info/")
+public class PlayerInfoController {
 
     @Autowired
-    private PlayersService playersService;
+    private PlayersInfoService playersInfoService;
 
     @GetMapping("all")
-    public List<PlayerStats> getAllPlayerStats() {
-        return playersService.getAllPlayerStats();
+    public List<PlayerInfo> getAllPlayers() {
+        return playersInfoService.getAllPlayerInfos();
     }
 
     @GetMapping("{nickname}")
-    public PlayerStats getPlayerStatsByNickname(@PathVariable String nickname) {
-        return playersService.getPlayerStats(nickname);
+    public PlayerInfo getPlayerByNickname(@PathVariable String nickname) {
+        return playersInfoService.getPlayerInfo(nickname);
     }
 }
