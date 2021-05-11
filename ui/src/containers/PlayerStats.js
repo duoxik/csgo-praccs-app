@@ -5,6 +5,7 @@ import { loadAllStats } from "../actions/playerStatsActions";
 
 const mapStateToProps = ({ playerStatsReducer }) => ({
   stats: playerStatsReducer.stats,
+  statsNeedUpdate: playerStatsReducer.statsNeedUpdate,
 });
 
 const mapDispatchToProps = (dispatch) =>

@@ -40,11 +40,18 @@ export default class PlayerStats extends React.Component {
         wonMatches: PropTypes.number.isRequired,
       })
     ),
+    statsNeedUpdate: PropTypes.bool.isRequired,
     loadAllStats: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     this.props.loadAllStats();
+  }
+
+  componentDidUpdate() {
+    if (this.props.statsNeedUpdate) {
+      this.props.loadAllStats();
+    }
   }
 
   render() {
