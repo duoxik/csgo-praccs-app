@@ -6,26 +6,24 @@ import lombok.experimental.UtilityClass;
 public class EloUtils {
 
     /**
-     * Метод рассчитывает новый рейтинг команды А с учетом, если она выиграет команду Б
+     * Метод рассчитывает сколько рейтинга нужно добавить команде А при выигрыше у команды Б
      *
      * @param rankA рейтинг команды А
      * @param rankB рейтинг команды Б
-     * @return новый рейтинг команды А
+     * @return delta кол-во очков нужно добавить
      */
-    public static int calculateWin(int rankA, int rankB) {
-        double K = 1 / (1 + Math.pow(10, (rankB - rankA) / 400d));
-        return (int) Math.round(rankA + 50 * (1 - K));
+    public static int calculateDeltaWin(int rankA, int rankB) {
+        return (int) Math.round(50 * (1 - 1 / (1 + Math.pow(10, (rankB - rankA) / 400d))));
     }
 
     /**
-     * Метод рассчитывает новый рейтинг команды А с учетом, если она проиграет команде Б
+     * Метод рассчитывает сколько рейтинга нужно отнять у команды А при проигрыше команде Б
      *
      * @param rankA рейтинг команды А
      * @param rankB рейтинг команды Б
-     * @return новый рейтинг команды А
+     * @return delta кол-во очков нужно отнять
      */
-    public static int calculateLose(int rankA, int rankB) {
-        double K = 1 / (1 + Math.pow(10, (rankB - rankA) / 400d));
-        return (int) Math.round(rankA - 50 * K);
+    public static int calculateDeltaLose(int rankA, int rankB) {
+        return (int) Math.round(50 / (1 + Math.pow(10, (rankB - rankA) / 400d)));
     }
 }

@@ -29,7 +29,6 @@ public class UploadMatchServiceImpl implements UploadMatchService {
     private MatchDao matchDao;
 
     @Override
-    @Transactional
     public Match uploadMatch(Platform platform, Integer matchId) {
         PlatformService parserService = platformServiceFactory.getService(platform);
 
@@ -43,23 +42,23 @@ public class UploadMatchServiceImpl implements UploadMatchService {
             Team team2 = match.getTeam2();
             int avgRankTeam1 = averageTeamRank(team1);
             int avgRankTeam2 = averageTeamRank(team2);
-            updatePlayersInfoByTeam(team1, avgRankTeam2);
-            updatePlayersInfoByTeam(team2, avgRankTeam1);
+            updatePlayersInfoByTeam(team1, avgRankTeam1, avgRankTeam2);
+            updatePlayersInfoByTeam(team2, avgRankTeam2, avgRankTeam1);
             matchDao.saveMatch(matchId);
             return match;
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private void updatePlayersInfoByTeam(Team yourTeam, Integer otherTeamAvgRank) {
+    private void updatePlayersInfoByTeam(Team yourTeam, Integer yourTeamAvgRank, Integer otherTeamAvgRank) {
         yourTeam.getPlayers().forEach(player -> {
             boolean yourTeamWinner = yourTeam.getWinner();
             PlayerInfo playerInfo = getPlayerInfo(player.getNickname(), player.getFastcupUserId());
             Integer newRank = yourTeamWinner
-                    ? EloUtils.calculateWin(playerInfo.getRank(), otherTeamAvgRank)
-                    : EloUtils.calculateLose(playerInfo.getRank(), otherTeamAvgRank);
+                    ? playerInfo.getRank() + EloUtils.calculateDeltaWin(yourTeamAvgRank, otherTeamAvgRank)
+                    : playerInfo.getRank() - EloUtils.calculateDeltaLose(yourTeamAvgRank, otherTeamAvgRank);
             Integer newKills = playerInfo.getKills() + player.getKills();
             Integer newDeaths = playerInfo.getDeaths() + player.getDeaths();
             Integer newTotalMatches = playerInfo.getTotalMatches() + 1;
