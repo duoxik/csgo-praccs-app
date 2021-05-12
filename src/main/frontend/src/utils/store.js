@@ -1,4 +1,4 @@
-import { applyMiddleware, compose, createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import initReducers from "./../reducers";
 import middlewares from "../middlewares";
 import { createBrowserHistory } from "history";
@@ -6,6 +6,7 @@ import { routerMiddleware } from "connected-react-router";
 import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import { persistStore, persistReducer } from "redux-persist";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 const persistConfig = {
   key: "csgo_praccs",
@@ -24,11 +25,8 @@ function initStore() {
   const store = createStore(
     persistReducer(persistConfig, initReducers(history)),
     initialStore,
-    compose(
-      applyMiddleware(routerMiddleware(history), ...middlewares),
-      window.__REDUX_DEVTOOLS_EXTENSION__
-        ? window.__REDUX_DEVTOOLS_EXTENSION__()
-        : () => {}
+    composeWithDevTools(
+      applyMiddleware(routerMiddleware(history), ...middlewares)
     )
   );
 

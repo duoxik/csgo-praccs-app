@@ -43,6 +43,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.0",
     "redux-api-middleware": "^3.2.1",
+    "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0"
   }
 }

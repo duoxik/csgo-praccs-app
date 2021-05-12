@@ -10,6 +10,10 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    port: 3000,
+    proxy: {
+      "/api": "http://localhost:8080",
+    },
   },
   devtool: "eval-source-map",
   module: {
