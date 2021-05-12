@@ -1,3 +1,63 @@
+buildscript {
+    ext {
+        springBootVersion = '2.2.4.RELEASE'
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
 plugins {
     id "com.github.node-gradle.node" version "1.5.3"
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.postgresql:postgresql:42.2.20'
+    implementation 'org.json:json:20210307'
+    compile 'org.apache.httpcomponents:httpclient:4.5.13'
+    compileOnly("org.projectlombok:lombok:1.18.16")
+    annotationProcessor "org.projectlombok:lombok:1.18.16"
+}
+
+node {
+    version = '14.15.5'
+    download = true
+    workDir = file("${project.projectDir}/src/main/frontend/nodejs")
+    npmWorkDir = file("${project.projectDir}/src/main/frontend/npm")
+    nodeModulesDir = file("${project.projectDir}/src/main/frontend")
+}
+
+task copyNpmBuild(type: Copy) {
+    from "$projectDir/src/main/frontend/build/"
+    into "$buildDir/resources/main/static"
+}
+
+tasks.register('deleteFrontendToBuild', Delete) {
+    delete "$projectDir/src/main/frontend/build/"
+}
+
+clean {
+    dependsOn(deleteFrontendToBuild)
+}
+
+build {
+    dependsOn 'clean'
+    dependsOn 'npm_run_build'
+    dependsOn 'copyNpmBuild'
+    tasks.findByName('npm_run_build').mustRunAfter 'clean'
+    tasks.findByName('copyNpmBuild').mustRunAfter 'npm_run_build'
+    tasks.findByName('build').mustRunAfter 'copyNpmBuild'
 }
