@@ -1,0 +1,3 @@
+rootProject.name = 'csgo-praccs-app'
+include 'rest'
+include 'ui'
