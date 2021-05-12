@@ -2,6 +2,7 @@ package ru.duoxik.service.uploadmatch;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.duoxik.entity.Match;
 import ru.duoxik.entity.Platform;
 import ru.duoxik.entity.PlayerInfo;
@@ -9,6 +10,7 @@ import ru.duoxik.entity.Team;
 import ru.duoxik.service.matchparser.PlatformService;
 import ru.duoxik.service.matchparser.factory.PlatformServiceFactory;
 import ru.duoxik.service.playerstats.PlayersInfoService;
+import ru.duoxik.service.uploadmatch.dao.MatchDao;
 import ru.duoxik.utils.EloUtils;
 
 import java.io.IOException;
@@ -23,9 +25,17 @@ public class UploadMatchServiceImpl implements UploadMatchService {
     @Autowired
     private PlayersInfoService playersInfoService;
 
+    @Autowired
+    private MatchDao matchDao;
+
     @Override
+    @Transactional
     public Match uploadMatch(Platform platform, Integer matchId) {
         PlatformService parserService = platformServiceFactory.getService(platform);
+
+        if (matchDao.getMatch(matchId) != null) {
+            throw new RuntimeException("Match already uploaded");
+        }
 
         try {
             Match match = parserService.getMatch(matchId);
@@ -35,6 +45,7 @@ public class UploadMatchServiceImpl implements UploadMatchService {
             int avgRankTeam2 = averageTeamRank(team2);
             updatePlayersInfoByTeam(team1, avgRankTeam2);
             updatePlayersInfoByTeam(team2, avgRankTeam1);
+            matchDao.saveMatch(matchId);
             return match;
         } catch (IOException e) {
             e.printStackTrace();
