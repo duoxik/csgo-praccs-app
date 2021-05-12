@@ -5,4 +5,4 @@ db:
   password: ba4c9a939f9a819feacc6b3f20e3847b631e8da7315b7398e7cbc407861d1c6d
 
 server:
-  port: 3000
+  port: 8080
