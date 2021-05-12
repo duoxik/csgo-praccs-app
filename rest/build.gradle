@@ -40,6 +40,6 @@ task copyToRoot(type: Copy) {
 }
 
 build.dependsOn(copyToRoot)
-copyToRoot.dependsOn(copyToLib)
+//build.dependsOn(copyToLib)
 
 task stage(dependsOn: ['build', 'clean'])
