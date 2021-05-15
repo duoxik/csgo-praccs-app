@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class PlayersInfoServiceImpl implements PlayersInfoService {
 
+    private final PlayersInfoDao playersInfoDao;
+
     @Autowired
-    private PlayersInfoDao playersInfoDao;
+    public PlayersInfoServiceImpl(PlayersInfoDao playersInfoDao) {
+        this.playersInfoDao = playersInfoDao;
+    }
 
     @Override
     public PlayerInfo getPlayerInfo(Integer fastcupUserId) {

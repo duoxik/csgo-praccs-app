@@ -11,6 +11,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MatchesRequest {
-    private List<Integer> matches;
+public class ShuffleRequest {
+    private List<Integer> fastcupUserIds;
 }

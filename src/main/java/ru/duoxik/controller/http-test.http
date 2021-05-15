@@ -1,3 +1,23 @@
+POST http://localhost:8080/api/shuffle
+Content-Type: application/json
+
+{
+  "fastcupUserIds": [
+    569911,
+    77961,
+    29531,
+    494204,
+    111354,
+    111352,
+    1048172,
+    136631,
+    1035720,
+    11220
+  ]
+}
+
+###
+
 GET http://localhost:8080/api/player-info/all
 Accept: application/json
 

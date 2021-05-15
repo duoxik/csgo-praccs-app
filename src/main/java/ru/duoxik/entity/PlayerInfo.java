@@ -1,12 +1,14 @@
 package ru.duoxik.entity;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @Builder
 @ToString
+@EqualsAndHashCode
 public class PlayerInfo {
     private final Integer id;
     private final String nickname;

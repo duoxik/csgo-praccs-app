@@ -3,7 +3,6 @@ package ru.duoxik.service.uploadmatch;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.duoxik.entity.Match;
 import ru.duoxik.entity.Platform;
 import ru.duoxik.entity.PlayerInfo;
@@ -14,20 +13,23 @@ import ru.duoxik.service.playerstats.PlayersInfoService;
 import ru.duoxik.service.uploadmatch.dao.MatchDao;
 import ru.duoxik.utils.EloUtils;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @Service
 public class UploadMatchServiceImpl implements UploadMatchService {
 
-    @Autowired
-    private PlatformServiceFactory platformServiceFactory;
+    private final PlatformServiceFactory platformServiceFactory;
+    private final PlayersInfoService playersInfoService;
+    private final MatchDao matchDao;
 
     @Autowired
-    private PlayersInfoService playersInfoService;
-
-    @Autowired
-    private MatchDao matchDao;
+    public UploadMatchServiceImpl(PlatformServiceFactory platformServiceFactory,
+                                  PlayersInfoService playersInfoService,
+                                  MatchDao matchDao) {
+        this.platformServiceFactory = platformServiceFactory;
+        this.playersInfoService = playersInfoService;
+        this.matchDao = matchDao;
+    }
 
     @Override
     public Match uploadMatch(Platform platform, Integer matchId) {

@@ -15,8 +15,12 @@ import ru.duoxik.service.uploadmatch.UploadMatchService;
 @RequestMapping("api/upload-match")
 public class UploadMatchController {
 
+    private final UploadMatchService uploadMatchService;
+
     @Autowired
-    private UploadMatchService uploadMatchService;
+    public UploadMatchController(UploadMatchService uploadMatchService) {
+        this.uploadMatchService = uploadMatchService;
+    }
 
     @PostMapping("/{matchId}")
     public Match uploadMatch(@PathVariable Integer matchId) {

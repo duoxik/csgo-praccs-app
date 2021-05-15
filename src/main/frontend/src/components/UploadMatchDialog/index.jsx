@@ -16,7 +16,7 @@ export default class UploadMatchDialog extends React.Component {
   };
 
   state = {
-    matchId: 5297220,
+    matchId: "",
   };
 
   handleMatchIdChange = (event) => {

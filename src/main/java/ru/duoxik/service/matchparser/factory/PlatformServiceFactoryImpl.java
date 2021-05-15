@@ -10,9 +10,11 @@ import ru.duoxik.service.matchparser.PlatformService;
 @Service
 public class PlatformServiceFactoryImpl implements PlatformServiceFactory {
 
-    @Autowired
-    @Qualifier("fastcupService")
-    private PlatformService fastcupService;
+    private final PlatformService fastcupService;
+
+    public PlatformServiceFactoryImpl(@Qualifier("fastcupService") PlatformService fastcupService) {
+        this.fastcupService = fastcupService;
+    }
 
     @Override
     public PlatformService getService(@NonNull Platform platform) {

@@ -2,7 +2,6 @@ package ru.duoxik.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.duoxik.entity.PlayerInfo;
@@ -14,8 +13,12 @@ import java.util.List;
 @RequestMapping("api/player-info/")
 public class PlayerInfoController {
 
+    private final PlayersInfoService playersInfoService;
+
     @Autowired
-    private PlayersInfoService playersInfoService;
+    public PlayerInfoController(PlayersInfoService playersInfoService) {
+        this.playersInfoService = playersInfoService;
+    }
 
     @GetMapping("all")
     public List<PlayerInfo> getAllPlayers() {
