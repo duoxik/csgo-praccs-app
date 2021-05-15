@@ -28,9 +28,11 @@ public class PlayersInfoDao {
             "select p.fastcup_user_id, p.nickname, pi.kills, pi.deaths, pi.total_matches, pi.won_matches, pi.rank from players p " +
                     "inner join players_info pi on p.id = pi.player_id where p.fastcup_user_id = ?";
 
+    private static final String UPDATE_PLAYERS_SQL = "update players set nickname = ? where fastcup_user_id = ?";
+
     private static final String UPDATE_PLAYER_INFO_SQL =
             "update players_info set rank = ?, kills = ?, deaths = ?, total_matches = ?, won_matches = ? " +
-                    "where player_id = (select id from players where nickname = ?)";
+                    "where player_id = (select id from players where fastcup_user_id = ?)";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -73,9 +75,11 @@ public class PlayersInfoDao {
         return getPlayerInfoByNickname(nickname);
     }
 
+    @Transactional
     public int updatePlayer(PlayerInfo info) {
+        jdbcTemplate.update(UPDATE_PLAYERS_SQL, info.getNickname(), info.getId());
         return jdbcTemplate.update(UPDATE_PLAYER_INFO_SQL, info.getRank(), info.getKills(),
-                info.getDeaths(), info.getTotalMatches(), info.getWonMatches(), info.getNickname());
+                info.getDeaths(), info.getTotalMatches(), info.getWonMatches(), info.getId());
     }
 
     private static final RowMapper<PlayerInfo> MAPPER = (rs, rowNum) -> PlayerInfo.builder()

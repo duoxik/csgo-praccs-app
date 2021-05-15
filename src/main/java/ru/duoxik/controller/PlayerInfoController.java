@@ -21,9 +21,4 @@ public class PlayerInfoController {
     public List<PlayerInfo> getAllPlayers() {
         return playersInfoService.getAllPlayerInfos();
     }
-
-    @GetMapping("{nickname}")
-    public PlayerInfo getPlayerByNickname(@PathVariable String nickname) {
-        return playersInfoService.getPlayerInfo(nickname);
-    }
 }

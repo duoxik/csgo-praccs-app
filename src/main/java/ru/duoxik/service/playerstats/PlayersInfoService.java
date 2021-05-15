@@ -10,14 +10,6 @@ import java.util.List;
 public interface PlayersInfoService {
 
     /**
-     * Возвращает информацию о игроке по заданному нику
-     *
-     * @param nickname никнейм игрока
-     * @return статистика
-     */
-    PlayerInfo getPlayerInfo(String nickname);
-
-    /**
      * озвращает информацию о игроке по fastcup_user_id
      *
      * @param fastcupUserId id игрока на платформе FASTCUP

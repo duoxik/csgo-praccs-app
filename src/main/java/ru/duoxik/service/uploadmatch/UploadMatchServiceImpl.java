@@ -1,5 +1,6 @@
 package ru.duoxik.service.uploadmatch;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,7 +56,7 @@ public class UploadMatchServiceImpl implements UploadMatchService {
     private void updatePlayersInfoByTeam(Team yourTeam, Integer yourTeamAvgRank, Integer otherTeamAvgRank) {
         yourTeam.getPlayers().forEach(player -> {
             boolean yourTeamWinner = yourTeam.getWinner();
-            PlayerInfo playerInfo = getPlayerInfo(player.getNickname(), player.getFastcupUserId());
+            PlayerInfo playerInfo = getPlayerInfo(player.getFastcupUserId());
             Integer newRank = yourTeamWinner
                     ? playerInfo.getRank() + EloUtils.calculateDeltaWin(yourTeamAvgRank, otherTeamAvgRank)
                     : playerInfo.getRank() - EloUtils.calculateDeltaLose(yourTeamAvgRank, otherTeamAvgRank);
@@ -66,7 +67,7 @@ public class UploadMatchServiceImpl implements UploadMatchService {
 
             playersInfoService.updatePlayer(
                     PlayerInfo.builder()
-                            .nickname(playerInfo.getNickname())
+                            .nickname(player.getNickname())
                             .id(playerInfo.getId())
                             .deaths(newDeaths)
                             .kills(newKills)
@@ -86,21 +87,14 @@ public class UploadMatchServiceImpl implements UploadMatchService {
      */
     private int averageTeamRank(Team team) {
         return (int) Math.round(team.getPlayers().stream()
-                .map(player -> getPlayerInfo(player.getNickname(), player.getFastcupUserId()).getRank())
+                .map(player -> getPlayerInfo(player.getFastcupUserId()).getRank())
                 .mapToInt(Integer::intValue)
                 .summaryStatistics()
                 .getAverage());
     }
 
-    /**
-     * Возвращает информацию об игроке. Если игрока с ником не существует, то генерируется новый игрок.
-     *
-     * @param nickname      никнейм
-     * @param fastcupUserId id игрока на платформе FASTCUP
-     * @return информация об игроке
-     */
-    private PlayerInfo getPlayerInfo(String nickname, Integer fastcupUserId) {
-        return Optional.ofNullable(playersInfoService.getPlayerInfo(nickname))
-                .orElseGet(() -> playersInfoService.createPlayer(nickname, fastcupUserId));
+    private PlayerInfo getPlayerInfo(Integer fastcupUserId) {
+        return Optional.ofNullable(playersInfoService.getPlayerInfo(fastcupUserId))
+                .orElseGet(() -> playersInfoService.createPlayer(RandomStringUtils.randomAlphabetic(10), fastcupUserId));
     }
 }

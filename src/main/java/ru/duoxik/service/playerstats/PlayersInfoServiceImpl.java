@@ -14,11 +14,6 @@ public class PlayersInfoServiceImpl implements PlayersInfoService {
     private PlayersInfoDao playersInfoDao;
 
     @Override
-    public PlayerInfo getPlayerInfo(String nickname) {
-        return playersInfoDao.getPlayerInfoByNickname(nickname);
-    }
-
-    @Override
     public PlayerInfo getPlayerInfo(Integer fastcupUserId) {
         return playersInfoDao.getPlayerInfoByFastcupUserId(fastcupUserId);
     }
@@ -37,6 +32,4 @@ public class PlayersInfoServiceImpl implements PlayersInfoService {
     public boolean updatePlayer(PlayerInfo playerInfo) {
         return playersInfoDao.updatePlayer(playerInfo) > 0;
     }
-
-
 }
