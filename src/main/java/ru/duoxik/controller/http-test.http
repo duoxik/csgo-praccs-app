@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/player-stats/all
+GET http://localhost:8080/api/player-info/all
 Accept: application/json
 
 ###
