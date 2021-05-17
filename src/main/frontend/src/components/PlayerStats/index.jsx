@@ -5,7 +5,13 @@ import "./style.css";
 
 const columns = [
   { field: "nickname", headerName: "Nickname", width: 220 },
-  { field: "rank", headerName: "Rank", type: "number", width: 140 },
+  {
+    field: "rank",
+    headerName: "Rank",
+    type: "number",
+    width: 140,
+    cellClassName: "rank",
+  },
   { field: "kills", headerName: "Kills", type: "number", width: 140 },
   {
     field: "deaths",

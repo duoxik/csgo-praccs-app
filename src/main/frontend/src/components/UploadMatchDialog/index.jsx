@@ -8,11 +8,40 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
 
+const columns = [
+  { field: "nickname", headerName: "Nickname", width: 220 },
+  {
+    field: "rank",
+    headerName: "Rank",
+    type: "number",
+    width: 140,
+    cellClassName: "rank",
+  },
+  { field: "kills", headerName: "Kills", type: "number", width: 140 },
+  {
+    field: "deaths",
+    headerName: "Deaths",
+    type: "number",
+    width: 140,
+  },
+  {
+    field: "totalMatches",
+    headerName: "Total matches",
+    type: "number",
+    width: 180,
+  },
+  {
+    field: "wonMatches",
+    headerName: "Won matches",
+    type: "number",
+    width: 180,
+  },
+];
+
 export default class UploadMatchDialog extends React.Component {
   static propTypes = {
     open: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
-    uploadMatch: PropTypes.func.isRequired,
   };
 
   state = {
@@ -37,12 +66,8 @@ export default class UploadMatchDialog extends React.Component {
     const { open, handleClose, uploadMatch } = this.props;
     return (
       <div>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Uploader</DialogTitle>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Uploader</DialogTitle>
           <DialogContent>
             <DialogContentText>
               To upload match, please enter match number.

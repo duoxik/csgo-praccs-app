@@ -1,0 +1,9 @@
+.shuffle-table {
+    background-color: white;
+    min-height: 630px;
+    width: 425px;
+}
+
+.rank {
+    font-weight: bold;
+}

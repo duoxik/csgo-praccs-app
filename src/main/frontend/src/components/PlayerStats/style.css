@@ -4,3 +4,7 @@
     width: 1020px;
     opacity: 0.85;
 }
+
+.rank {
+    font-weight: bold;
+}
