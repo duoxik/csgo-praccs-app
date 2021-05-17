@@ -35,7 +35,7 @@ public class ShuffleServiceImpl implements ShuffleService {
     @Override
     public ShuffleVariation shuffle(@NonNull List<Integer> fastcupUserIds) {
         if (fastcupUserIds.size() != DEFAULT_PLAYERS_IN_MATCH_COUNT) {
-            throw new IllegalArgumentException("Count of players could be " + DEFAULT_PLAYERS_IN_MATCH_COUNT);
+            throw new IllegalArgumentException("Count of players should be " + DEFAULT_PLAYERS_IN_MATCH_COUNT);
         }
 
         List<PlayerInfo> players = fastcupUserIds.stream().map(id ->

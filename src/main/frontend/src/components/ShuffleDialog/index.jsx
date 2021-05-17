@@ -58,7 +58,7 @@ export default class ShuffleDialog extends React.Component {
           <DialogTitle>Shuffle</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To shuffle players, select 10 players from table.
+              To shuffle players, select 10 players from the table.
             </DialogContentText>
             <DataGrid
               checkboxSelection
