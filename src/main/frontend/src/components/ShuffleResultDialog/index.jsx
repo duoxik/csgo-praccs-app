@@ -5,9 +5,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
-import "./style.css";
 import { DIALOGS } from "../../reducers/dialogReducer";
 import {
+  Container,
   Grid,
   LinearProgress,
   List,
@@ -15,19 +15,21 @@ import {
   ListItemText,
   ListSubheader,
   Paper,
+  withStyles,
 } from "@material-ui/core";
 
-class Alert extends React.Component {
-  render() {
-    return null;
-  }
-}
+const styles = (theme) => ({
+  dialogSize: {
+    minWidth: 600,
+    minHeight: 50,
+  },
+  dialogWithTeamsSize: {
+    minWidth: 600,
+    minHeight: 325,
+  },
+});
 
-Alert.propTypes = {
-  severity: PropTypes.string,
-  children: PropTypes.node,
-};
-export default class ShuffleResultDialog extends React.Component {
+class ShuffleResultDialog extends React.Component {
   static propTypes = {
     isDialogOpen: PropTypes.bool.isRequired,
     leftTeam: PropTypes.objectOf(
@@ -59,8 +61,6 @@ export default class ShuffleResultDialog extends React.Component {
     closeDialog: PropTypes.func.isRequired,
   };
 
-  state = {};
-
   handleCloseDialog = () => {
     this.props.closeDialog(DIALOGS.SHUFFLE_RESULT);
   };
@@ -90,6 +90,7 @@ export default class ShuffleResultDialog extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     const {
       isDialogOpen,
       leftTeam,
@@ -106,16 +107,19 @@ export default class ShuffleResultDialog extends React.Component {
           open={isDialogOpen}
           onClose={this.handleCloseDialog}
           maxWidth="lg"
-          className="shuffle-result-dialog"
         >
           <DialogTitle>Shuffle result</DialogTitle>
           <DialogContent>
-            <div className="shuffle-dialog-wrapper">
-              {isShuffleInProgress ? (
+            {isShuffleInProgress ? (
+              <Container className={classes.dialogSize}>
                 <LinearProgress />
-              ) : isShuffleContainsError ? (
-                <div>Выбери 10 человек дурень!</div>
-              ) : (
+              </Container>
+            ) : isShuffleContainsError ? (
+              <Container className={classes.dialogSize}>
+                Выбери 10 человек дурень!
+              </Container>
+            ) : (
+              <Container className={classes.dialogWithTeamsSize}>
                 <Grid container spacing={3}>
                   <Grid item xs zeroMinWidth>
                     <Paper elevation={3}>
@@ -128,8 +132,8 @@ export default class ShuffleResultDialog extends React.Component {
                     </Paper>
                   </Grid>
                 </Grid>
-              )}
-            </div>
+              </Container>
+            )}
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleCloseDialog} color="primary">
@@ -141,3 +145,5 @@ export default class ShuffleResultDialog extends React.Component {
     );
   }
 }
+
+export default withStyles(styles)(ShuffleResultDialog);
