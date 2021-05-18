@@ -8,6 +8,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
 import { DataGrid } from "@material-ui/data-grid";
 import "./style.css";
+import { DIALOGS } from "../../reducers/dialogReducer";
 
 const columns = [
   { field: "nickname", headerName: "Nickname", width: 220 },
@@ -22,8 +23,7 @@ const columns = [
 
 export default class ShuffleDialog extends React.Component {
   static propTypes = {
-    open: PropTypes.bool.isRequired,
-    handleClose: PropTypes.func.isRequired,
+    isDialogOpen: PropTypes.bool.isRequired,
     stats: PropTypes.arrayOf(
       PropTypes.shape({
         fastcupId: PropTypes.number.isRequired,
@@ -31,6 +31,8 @@ export default class ShuffleDialog extends React.Component {
         rank: PropTypes.number.isRequired,
       })
     ),
+    openDialog: PropTypes.func.isRequired,
+    closeDialog: PropTypes.func.isRequired,
     shufflePlayers: PropTypes.func.isRequired,
   };
 
@@ -44,17 +46,26 @@ export default class ShuffleDialog extends React.Component {
     });
   };
 
+  handleCloseDialog = () => {
+    this.props.closeDialog(DIALOGS.SHUFFLE);
+  };
+
   handleShuffleClick = () => {
-    const { shufflePlayers, handleClose } = this.props;
+    const { shufflePlayers, openDialog } = this.props;
     shufflePlayers(this.state.fastcupUserIds);
-    handleClose();
+    this.handleCloseDialog();
+    openDialog(DIALOGS.SHUFFLE_RESULT);
   };
 
   render() {
-    const { open, handleClose, stats } = this.props;
+    const { isDialogOpen, stats } = this.props;
     return (
       <div>
-        <Dialog open={open} onClose={handleClose} maxWidth="500px">
+        <Dialog
+          open={isDialogOpen}
+          onClose={this.handleCloseDialog}
+          maxWidth="500px"
+        >
           <DialogTitle>Shuffle</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -77,7 +88,7 @@ export default class ShuffleDialog extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={this.handleCloseDialog} color="primary">
               Cancel
             </Button>
             <Button onClick={this.handleShuffleClick} color="primary">

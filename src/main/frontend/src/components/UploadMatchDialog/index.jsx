@@ -7,6 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
+import { DIALOGS } from "../../reducers/dialogReducer";
 
 const columns = [
   { field: "nickname", headerName: "Nickname", width: 220 },
@@ -40,8 +41,8 @@ const columns = [
 
 export default class UploadMatchDialog extends React.Component {
   static propTypes = {
-    open: PropTypes.bool.isRequired,
-    handleClose: PropTypes.func.isRequired,
+    isDialogOpen: PropTypes.bool.isRequired,
+    closeDialog: PropTypes.func.isRequired,
   };
 
   state = {
@@ -54,19 +55,23 @@ export default class UploadMatchDialog extends React.Component {
     });
   };
 
+  handleCloseDialog = () => {
+    this.props.closeDialog(DIALOGS.UPLOAD);
+  };
+
   handleUploadClick = () => {
     this.props.uploadMatch(this.state.matchId);
-    this.props.handleClose();
+    this.handleCloseDialog();
     this.setState({
       matchId: "",
     });
   };
 
   render() {
-    const { open, handleClose, uploadMatch } = this.props;
+    const { isDialogOpen } = this.props;
     return (
       <div>
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={isDialogOpen} onClose={this.handleCloseDialog}>
           <DialogTitle>Uploader</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -84,7 +89,7 @@ export default class UploadMatchDialog extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={this.handleCloseDialog} color="primary">
               Cancel
             </Button>
             <Button onClick={this.handleUploadClick} color="primary">
