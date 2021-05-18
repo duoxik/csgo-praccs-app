@@ -120,7 +120,13 @@ class ShuffleResultDialog extends React.Component {
               </Container>
             ) : (
               <Container className={classes.dialogWithTeamsSize}>
-                <Grid container spacing={3}>
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="flex-start"
+                  spacing={3}
+                >
                   <Grid item xs zeroMinWidth>
                     <Paper elevation={3}>
                       {this.renderTeamList(leftTeam, leftTeamAvgRank)}
